@@ -12,9 +12,9 @@ public class GreetingConfig {
 
     // get values from application.properties
     @Size(max = 10)
-    String name;
-    String suffix = "!";
-    Optional<String> prefix;
+    private String name;
+    private String suffix = "!";
+    private Optional<String> prefix;
     private CountryConfig country;
 
     public String getName() {
