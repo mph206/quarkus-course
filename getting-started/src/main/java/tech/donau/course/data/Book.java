@@ -1,12 +1,23 @@
 package tech.donau.course.data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 public class Book {
+
+    @NotBlank(message = "Name should not be blank")
     private String name;
+
+    @NotBlank(message = "Author should not be blank")
     private String author;
 
-    public Book(String name, String author) {
+    @Min(value = 1, message = "should be at least one page")
+    private Integer pages;
+
+    public Book(@NotBlank(message = "Name should not be blank") String name, @NotBlank(message = "Author should not be blank") String author, @Min(value = 1, message = "should be at least one page") Integer pages) {
         this.name = name;
         this.author = author;
+        this.pages = pages;
     }
 
     public Book() {}

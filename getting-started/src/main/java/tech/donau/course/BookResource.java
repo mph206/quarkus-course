@@ -1,12 +1,12 @@
 package tech.donau.course;
 
-import io.netty.util.internal.StringUtil;
 import tech.donau.course.data.Book;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Path("/book")
@@ -15,29 +15,33 @@ public class BookResource {
     private static List<Book> books = new ArrayList<>();
 
     static {
-        books.add(new Book("Harry Potter 1", "JK Rowling"));
+        books.add(new Book("Harry Potter 1", "JK Rowling", 1));
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<Book> getBooks() {
-        return books;
+    public Response getBooks() {
+        return Response.status(200).entity(books).build();
+//        return Response.ok(books).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Book addBook(Book book) { // book is the body of the POST request
+    public Response addBook(@Valid Book book) { // book is the body of the POST request
+        if (books.size() > 5) {
+            return Response.status(400).entity("No more than 5 books allowed").build();
+        }
         books.add(book);
-        return book;
+        return Response.accepted(book).build();
     }
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Book updateBook(@PathParam("id") Integer index, Book book) { // quarkus converts input to specified type
+    public Response updateBook(@PathParam("id") Integer index, Book book) { // quarkus converts input to specified type
         books.remove((int) index);
         books.add(index, book);
-        return book;
+        return Response.accepted(book).build();
     }
 
     @DELETE
