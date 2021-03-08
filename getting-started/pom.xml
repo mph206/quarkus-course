@@ -57,6 +57,10 @@
       <artifactId>groovy</artifactId>
       <version>3.0.3</version>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-openapi</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
